@@ -20,14 +20,20 @@ using namespace std;
 
 namespace Amit
 {
-	class AmitComand
+	class AmitComandMap
 	{
 	public:
-		unordered_map<string, string> cmdmap;
+		unordered_map<string, string> map;
 
 		int FindKeyValue(const char* keyname, string& keyvalue, char* output_str = NULL)
 		{
+			if (map.find(keyname) != map.end()) {
+				keyvalue = map[keyname];
+				return RET_SUCCESS;
+			}
 
+			if (NULL != output_str)
+				sprintf_s(output_str, OUTPUT_MAX, "Ret=FAIL\r\nValue=Cannot find the Parameter: '%s'", keyname);
 			return RET_COMMAND_KEY_NOT_FOUND;
 		}
 	};

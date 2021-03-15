@@ -81,24 +81,26 @@ TEST_F(AmitCommandParserTest, WithoutSectionCommand)
 
 }
 
-class AmitCommandTest : public Test
+class AmitCommandMapTest : public Test
 {
 public:
 	int ret = 0;
-	AmitComand cmd;
+	AmitComandMap cmd;
 	char output[65535]{ 0 };
 
 	void SetUp() override
 	{
-
+		cmd.map["Command"] = "Amit";
 	}
 };
 
-TEST_F(AmitCommandTest, WithoutSectionCommand)
+TEST_F(AmitCommandMapTest, WithoutSectionCommand)
 {
 	string keyvalue;
 	ret = cmd.FindKeyValue("Command", keyvalue, output);
 
 	ASSERT_EQ(ret, RET_SUCCESS);
+	ASSERT_EQ(keyvalue, "Amit");
+
 
 }
