@@ -10,11 +10,6 @@ public:
 	int ret = 0;
 	AmitCommandParser cmdparser;
 	char output[65535]{ 0 };
-
-	void SetUp() override
-	{
-
-	}
 };
 
 TEST_F(AmitCommandParserTest, ReadCommandLines) {
@@ -85,22 +80,19 @@ class AmitCommandMapTest : public Test
 {
 public:
 	int ret = 0;
-	AmitComandMap cmd;
+	AmitCommandParams cmdparams;
 	char output[65535]{ 0 };
 
 	void SetUp() override
 	{
-		cmd.map["Command"] = "Amit";
+		cmdparams.AddNewParam("Command", "Amit");
 	}
 };
 
-TEST_F(AmitCommandMapTest, WithoutSectionCommand)
+TEST_F(AmitCommandMapTest, FindStringParamValue)
 {
-	string keyvalue;
-	ret = cmd.FindKeyValue("Command", keyvalue, output);
+	string paramvalue;
+	ret = cmdparams.FindParamValue("Command", paramvalue, output);
 
-	ASSERT_EQ(ret, RET_SUCCESS);
-	ASSERT_EQ(keyvalue, "Amit");
-
-
+	ASSERT_EQ(paramvalue, "Amit");
 }

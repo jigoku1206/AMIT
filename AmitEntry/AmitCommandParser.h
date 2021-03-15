@@ -20,21 +20,25 @@ using namespace std;
 
 namespace Amit
 {
-	class AmitComandMap
+	class AmitCommandParams
 	{
-	public:
-		unordered_map<string, string> map;
+	private:
+		unordered_map<string, string> params;
 
-		int FindKeyValue(const char* keyname, string& keyvalue, char* output_str = NULL)
+	public:
+		void AddNewParam(string keyname, string keyvalue)
 		{
-			if (map.find(keyname) != map.end()) {
-				keyvalue = map[keyname];
+			params[keyname] = keyvalue;
+		}
+
+		int FindParamValue(const char* paramname, string& paramvalue, char* output_str)
+		{
+			if (params.find(paramname) != params.end()) {
+				paramvalue = params[paramname];
 				return RET_SUCCESS;
 			}
-
-			if (NULL != output_str)
-				sprintf_s(output_str, OUTPUT_MAX, "Ret=FAIL\r\nValue=Cannot find the Parameter: '%s'", keyname);
-			return RET_COMMAND_KEY_NOT_FOUND;
+			else
+				return WriteOutputMsg(RET_COMMAND_KEY_NOT_FOUND, output_str, "Value=Cannot find the Parameter: '%s'", paramname);
 		}
 	};
 
