@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{53384064-769f-40cf-a8f1-e8af33c7e14f}</ProjectGuid>
+    <ProjectGuid>{e9ca3719-f2ce-48c5-8499-6868d5a83685}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -33,11 +33,11 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="Amit.h" />
+    <ClInclude Include="GlobalDefine.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Soundex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Soundex.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

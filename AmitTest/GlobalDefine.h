@@ -1,0 +1,10 @@
+#pragma once
+
+
+enum AMIT_ERRORCODE
+{
+	RET_FAIL,
+	RET_SUCCESS,
+
+	RET_PARSE_COMMAND_FAIL
+};
