@@ -58,7 +58,7 @@ int AMIT_API AmitCommandParser::ParseCommandSectionArea(char* output)
 		else
 			return WriteOutputMsg(RET_PARSE_COMMAND_FAIL, output, "Parse Command Fail\r\n");
 	}
-	if (!batchlines.empty()) batchlines.erase(batchlines.begin());
+	if (!cmdsection.batchlines.empty()) cmdsection.batchlines.erase(cmdsection.batchlines.begin());
 
 	return WriteOutputMsg(RET_SUCCESS, output, "Parse Command PASS\r\n");
 }
@@ -77,11 +77,11 @@ bool AMIT_API AmitCommandParser::IsCommandKeys(string strline)
 void AMIT_API AmitCommandParser::GetBatchCommands(string strline)
 {
 	isBatchArea = strline.back() == '}' ? false : true;
-	if (isBatchArea)batchlines.push_back(strline);
+	if (isBatchArea)cmdsection.batchlines.push_back(strline);
 }
 void AMIT_API AmitCommandParser::GetCommandKeys(string strline)
 {
 	string keyname = strline.substr(0, strline.find("="));
 	string keyvalue = strline.substr(strline.find("=") + 1, strline.length() - strline.find("="));
-	cmdmap[keyname] = keyvalue;
+	cmdsection.AddNewKey(keyname, keyvalue);
 }

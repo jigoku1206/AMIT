@@ -24,11 +24,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 int _stdcall AmitEntry(const char* intputstr, char* outputstr)
 {
     int ret = RET_FAIL;
-    AmitCommandParser cmdparser;
-    
-    if(RET_SUCCESS != (ret = cmdparser.ParseCommandToCmdMap(intputstr, outputstr))) return ret;
-    
+    AmitFunctionLoader funcloader;
 
-
-    return RET_SUCCESS;
+	return (RET_SUCCESS == (ret = funcloader.FunctionFlowEntry(intputstr, outputstr))) ?
+             WriteOutputMsg(ret, outputstr, RET_SUCCESS_STR"%s", string(outputstr).c_str()) :
+             WriteOutputMsg(ret, outputstr, RET_FAIL_STR"%s", string(outputstr).c_str());
 }

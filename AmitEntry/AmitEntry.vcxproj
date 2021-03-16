@@ -154,6 +154,7 @@
     <ClInclude Include="..\Common\GlobalDefine.h" />
     <ClInclude Include="Amit.h" />
     <ClInclude Include="AmitCommandParser.h" />
+    <ClInclude Include="AmitFunctionLoader.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

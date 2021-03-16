@@ -10,3 +10,4 @@
 
 #include "../Common/GlobalDefine.h"
 #include "AmitCommandParser.h"
+#include "AmitFunctionLoader.h"

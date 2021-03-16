@@ -20,37 +20,11 @@ using namespace std;
 
 namespace Amit
 {
-	class AmitCommandParams
-	{
-	private:
-		unordered_map<string, string> params;
-
-	public:
-		void AddNewParam(string keyname, string keyvalue)
-		{
-			params[keyname] = keyvalue;
-		}
-
-		int FindParamValue(const char* paramname, string& paramvalue, char* output_str)
-		{
-			if (params.find(paramname) != params.end()) {
-				paramvalue = params[paramname];
-				return RET_SUCCESS;
-			}
-			else
-				return WriteOutputMsg(RET_COMMAND_KEY_NOT_FOUND, output_str, "Value=Cannot find the Parameter: '%s'", paramname);
-		}
-	};
-
 	class AMIT_API AmitCommandParser
 	{
-	private:
-		int ret = -1;
-
 	public:
-		unordered_map<string, string> cmdmap;
+		AmitCommandSection cmdsection;
 		vector<string> cmdlines;
-		vector<string> batchlines;
 
 		int ParseCommandToCmdMap(const char* inputstr, char* outputstr);
 
