@@ -169,3 +169,21 @@ TEST_F(AmitFunctionLoaderTest, SetAInvalidCommand)
 }
 
 #pragma endregion
+
+#pragma region CommonFunctionTest
+class CommonFunctionTest : public Test
+{
+public:
+	int ret = 0;
+	CommonFunction commonfunc;
+	char output[65535]{ 0 };
+	//AmitCommandSection cmdsection;
+};
+
+TEST_F(CommonFunctionTest, CheckAmitVersion)
+{
+	ret = commonfunc.AmitVersionCheck(output);
+	ASSERT_THAT(string(output), StartsWith("[VersionInfo]"));
+}
+
+#pragma endregion

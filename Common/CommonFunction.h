@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdio>
 #include <cstdarg>
+#include <Windows.h>
 #include "../Common/GlobalDefine.h"
 
 using namespace std;
@@ -92,11 +93,65 @@ namespace Amit
 
 	class CommonFunction
 	{
+	private:
+		int ret = -1;
 	public:
 		int AmitCommonFunctionFlow(AmitCommandSection& cmdsection, char* output_str)
 		{
+			string func_name;
+
+			if (RET_SUCCESS != (ret = cmdsection.FindKeyValue("Func", func_name, output_str)))
+				return ret;
+			if (func_name == "AmitVersionCheck")
+			{
+				return AmitVersionCheck(output_str);
+			}
+			else {
+				return WriteOutputMsg(RET_NOT_SUPPORTED_FUNCTION, output_str, "Cannot Find the Function: %s in AmitCommonFunctionFlow\r\n", func_name.c_str());
+			}
 
 			return WriteOutputMsg(RET_FAIL, output_str, "AmitCommonFunctionFlow!!!\r\n");
+		}
+
+		static int AmitVersionCheck(char* output_str)
+		{
+			DWORD  verHandle = 0;
+			UINT   size = 0;
+			LPBYTE lpBuffer = NULL;
+
+			wstring szVersionFile(L"AmitEntry.dll");
+			DWORD  verSize = GetFileVersionInfoSize(szVersionFile.c_str(), &verHandle);
+
+			if (verSize != NULL)
+			{
+				LPSTR verData = new char[verSize];
+
+				if (GetFileVersionInfo(szVersionFile.c_str(), verHandle, verSize, verData))
+				{
+					if (VerQueryValue(verData, L"\\", (VOID FAR * FAR*) & lpBuffer, &size))
+					{
+						if (size)
+						{
+							VS_FIXEDFILEINFO* verInfo = (VS_FIXEDFILEINFO*)lpBuffer;
+							if (verInfo->dwSignature == 0xfeef04bd)
+							{
+								// Doesn't matter if you are on 32 bit or 64 bit,
+								// DWORD is always 32 bits, so first two revision numbers
+								// come from dwFileVersionMS, last two come from dwFileVersionLS
+								return WriteOutputMsg(RET_SUCCESS, output_str,
+									"[VersionInfo]\r\nFileVersion=%d.%d.%d.%d\r\n",
+									(verInfo->dwFileVersionMS >> 16) & 0xffff,
+									(verInfo->dwFileVersionMS >> 0) & 0xffff,
+									(verInfo->dwFileVersionLS >> 16) & 0xffff,
+									(verInfo->dwFileVersionLS >> 0) & 0xffff
+								);
+							}
+						}
+					}
+				}
+				delete[] verData;
+			}
+			return WriteOutputMsg(RET_GET_VERSION_INFO_FAIL, output_str, "GetVersion Fail\r\nCannot Find VersionInfo of %s", szVersionFile.c_str());
 		}
 	};
 }
