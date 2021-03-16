@@ -49,8 +49,7 @@ TEST_F(SoundexEncoding, CombineDuplicateEncodings) {
 }
 
 TEST_F(SoundexEncoding, UppecasesFirstLetter) {
-	//ASSERT_EQ(soundex.encode("abcd"), StartsWith("A"));
-	ASSERT_EQ(soundex.encode("abcd"), "A123");  //It's like IgnoresVowelLikeLetters
+	ASSERT_THAT(soundex.encode("abcd"), StartsWith("A"));
 }
 
 TEST_F(SoundexEncoding, IgnoresCaseWhenEncodingConsonants) {
